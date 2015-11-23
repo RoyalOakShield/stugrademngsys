@@ -1,3 +1,5 @@
+package com/lzl/commulib;
+
 import java.net.*;
 import org.json.*;
 
@@ -12,7 +14,4 @@ public class NetworkTalker{
 		
 	}
 
-	public byte[] nextMsg{ //Waits for next message
-		
-	}
 }

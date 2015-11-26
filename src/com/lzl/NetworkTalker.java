@@ -15,13 +15,13 @@ public class NetworkTalker{
 	public static final int CONTROLLER=1;
 	public static final int MODEL=2;
 
-	public NetworkTalker(int Vport,int Cport,int Mport){
+	public NetworkTalker(int Vport,int Cport,int Mport,int characFlag){
 		port_numbers=new int[3];
 		port_numbers[this.VIEW]=Vport;
 		port_numbers[this.CONTROLLER]=Cport;
 		port_numbers[this.MODEL]=Mport;
 
-		socket=new DatagramSocket(this.port);
+		socket=new DatagramSocket(port_numbers[characFlag]);
 		try{
 			localHost=InetAddress.getLocalHost();
 		}

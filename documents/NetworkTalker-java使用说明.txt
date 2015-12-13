@@ -1,0 +1,28 @@
+NetworkTalker.java 使用说明
+
+1. 本模块用于在三个模块之间传递信息使用。模块封装了JAVA的UDP网络通信功能。
+
+2. 构造函数说明
+	public NetworkTalker(int Vport,int Cport,int Mport)
+
+	参数说明:
+		Vport ===> View模块使用的端口号
+		Cport ===> Controller模块使用的端口号
+		Mport ===> Model模块使用的端口号
+	解释：
+		这是模块唯一的构造参数，每个人确定自己的模块所使用的端口号后		，将这三个端口号对应填入三个位置中。
+
+3.成员方法说明
+	1. public void sendRequest(int des,JSONObject request)
+		
+	参数说明：
+		des ===> 要发送给的对象，是MVC三个部分中的一个。此参数可选
+	值和对应的意思是：
+			NetworkTalker.VIEW ==> 发送给VIEW模块
+			NetworkTalker.CONTROLLER ==> 发送给CONTROLLER模块
+			NetworkTalker.MODEL ==> 发送给MODEL模块
+		request ===> 要发送的请求的具体内容，JSONObject类の示例
+		
+	2. public JSONObject getNextRequest()
+	
+		从端口上收取下一个请求，JSONObject对象

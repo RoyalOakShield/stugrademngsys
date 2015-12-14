@@ -26,3 +26,7 @@ NetworkTalker.java 使用说明
 	2. public JSONObject getNextRequest()
 	
 		从端口上收取下一个请求，JSONObject对象
+
+	3. public void close()
+		
+		关闭模块，退出的时候使用

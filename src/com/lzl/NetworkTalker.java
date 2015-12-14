@@ -44,4 +44,8 @@ public class NetworkTalker{
 		String msg=new String(dp.getData(),0,dp.getLength());
 		return new JSONObject(msg);
 	}
+	
+	public void close(){
+		socket.close();
+	}
 }

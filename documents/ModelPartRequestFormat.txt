@@ -1,0 +1,53 @@
+Model部分可发送和接收格式说明
+
+第一部分： 可接收格式
+{
+	"Request":/* "ADD","DEL","SET","GET" */,
+	"Detail":{
+		"Identity":/* "STUDENT","TEACHER","FACULTY","MANAGER" */,
+		"Infotype":/* "PERSONALINFO","GRADE","ACCOUNT" */,
+		"Detail":{
+			/* 1.Student INFO
+			"Name":
+			"ID":
+			"Birthday":
+			"Institution":
+			"Specialty":
+			"Gender": */
+			
+			/* 2.Teacher INFO
+			"ID":
+			"Name":
+			"Institution":
+			"Specialty":   */
+
+			/* 3.Course INFO
+			"ID":
+			"Name":
+			"Credit": //学分
+			"Period": //学时  */
+	
+			/* 4.Score INFO
+			"ID":
+			"Course ID": 
+			"Teacher ID":
+			"Student ID":
+			"Score":   */
+
+			/* 5. Faculty man INFO
+			"ID":
+			"Name":
+			"Institution":   */
+
+			/* 6.User login account(for all users)
+			"Username":
+			"Password":  */
+		}
+	}
+}
+
+第二部分： 发送格式说明
+{
+	"Return": /* 0,1,2,3, ...   */
+	"Content":[{/*同第一个Detial的格式*/}]
+}

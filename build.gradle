@@ -1,0 +1,9 @@
+apply-plugin: 'application'
+//mainClassName="" 启动类的名字，要把包名字写全
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile 'org.mongodb:mongodb-driver:3.2.0'
+}

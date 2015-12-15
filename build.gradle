@@ -6,4 +6,5 @@ repositories {
 
 dependencies {
 	compile 'org.mongodb:mongodb-driver:3.2.0'
+	compile 'org.json:json:20151123'
 }

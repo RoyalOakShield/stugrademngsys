@@ -1,4 +1,4 @@
-package com.lzl.commulib;
+package com.lzl;
 
 import java.net.*;
 import org.json.*;

@@ -1,1 +1,1 @@
-Model部分的代码放在这儿
+Controllor部分的代码放在这儿

@@ -1,5 +1,5 @@
-apply-plugin: 'application'
-//mainClassName="" 启动类的名字，要把包名字写全
+apply plugin: 'application'
+//mainClassName='' 启动类的名字，要把包名字写全
 repositories {
 	mavenCentral()
 }

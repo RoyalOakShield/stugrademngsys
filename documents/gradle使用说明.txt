@@ -1,0 +1,3 @@
+gradle是一个Java工程编译系统，我打算用来解决第三方依赖库和最后打包发布的问题。有几点我想说一下：src/main/java目录下才是我们写代码的地方，每个人占一个包，比如说我写的代码的包都在com.lzl.model下面，V和C部分的代码都归到com.lzl.view和com.lzl.controller下面，相对应放文件夹的目录就是com/lzl/view和com/lzl/controller，不要乱放，实在不行就先建个自己的branch然后交给我。com/lzl/下面只放了一个NetworkTalker.java，这个不要动。
+
+编译工程的时候就用gradle build命令就可以了

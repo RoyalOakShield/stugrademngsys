@@ -16,8 +16,11 @@ public class LzlModelMain extends Thread{
   	//students,teachers,facultymen and managers' login accounts
 	private MongoCollection<Document> studentAccounts,teacherAccounts,facultyAccounts,managerAccounts;
 
-	//students, teachers ,courses, scores and faculotymen's personal information
-	private MongoCollection<Document> studentInfo,teacherInfo,courseInfo,scoreInfo,facultyInfo; 
+	//students, teachers ,courses, managers and faculotymen's personal information
+	private MongoCollection<Document> studentInfo,teacherInfo,courseInfo,facultyInfo,managerInfo; 
+
+	//score information
+	private MongoCollection<Document> score;
 
 	//Communication component to controllor
 	private NetworkTalker talker; 
@@ -37,6 +40,9 @@ public class LzlModelMain extends Thread{
 		teacherInfo=mongoDatabase.getCollection("teacherInfo");
 		facultyInfo=mongoDatabase.getCollection("facultyInfo");
 		managerInfo=mongoDatabase.getCollection("managerInfo");
+		courseInfo=mongoDatabase.getCollection("courseInfo");
+
+		score=mongoDatabase.getCollection("score");
 
 		talker=new NetworkTalker(/*Vport*/,/*Cport*/,/*Mport*/,NetworkTalker.MODEL);
 	}
@@ -56,6 +62,37 @@ public class LzlModelMain extends Thread{
 				String identity=(String)firstDetail.get("Identity");
 				String infotype=(String)firstDetail.get("Infotype");
 				JSONObject secondDetail=(JSONObject)firstDetail.get("Detail");
+				Document searchReqDoc=Document.parse(secondDetail.toString());
+
+				//Query from the database
+				FindInterable<Document> result;
+				if (infotype.equals("GRADE")){}
+				else if(identity.equals("STUDENT") && infotype.equals("PERSONALINFO")){
+					result=studentInfo.find(searchReqDoc);
+				}
+				else if(identity.equals("TEACHER") && infotype.equals("PERSONALINFO")){
+					result=teacherInfo.find(searchReqDoc);
+				}
+				else if(identity.equals("FACULTY") && infotype.equals("PERSONALINFO")){
+					result=facultyInfo.find(searchReqDoc);
+				}
+				else if(identity.equals("MANAGER") && infotype.equals("PERSONALINFO")){
+					result=managerInfo.find(searchReqDoc);
+				}
+				else if(identity.equals("STUDENT") && infotype.equals("ACCOUNT")){
+					result=studentInfo.find(searchReqDoc);
+				}
+				else if(identity.equals("TEACHER") && infotype.equals("ACCOUNT")){
+					result=teacherInfo.find(searchReqDoc);
+				}
+				else if(identity.equals("FACULTY") && infotype.equals("ACCOUNT")){
+					result=facultyInfo.find(searchReqDoc);
+				}
+				else if(identity.equals("MANAGER") && infotype.equals("ACCOUNT")){
+					result=managerInfo.find(searchReqDoc);
+				}
+
+				//Build up reply 
 				
 			}
 		}

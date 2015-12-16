@@ -69,7 +69,7 @@ public class LzlModelMain extends Thread{
 
 			//Work due to different situations
 			if(action.equals("ADD")){
-				
+				addForkingCode(identity,infotype,searchReqDoc);
 			}
 			else if(action.equals("DEL")){}
 			else if(action.equals("SET")){}
@@ -89,10 +89,10 @@ public class LzlModelMain extends Thread{
 					}
 				});
 
-				reply.put("Reply",count);
 				reply.put("Content",replyContents);
 			}
 			//Send back the result
+			reply.put("Reply",count);
 			talker.sendRequest(NetworkTalker.CONTROLLOR,reply);
 		}
 	}
@@ -129,5 +129,38 @@ public class LzlModelMain extends Thread{
 			}
 			
 			return result;
+	}
+
+	//Notice: searchReqDoc does not mean that it is for search,just because it is convenient.
+	private void addForkingCode(String IDENTITY,String INFOTYPE,Document searchReqDoc){
+
+		if (INFOTYPE.equals("GRADE")){
+			result=score.insertOne(searchReqDoc);
+		}
+		else if(IDENTITY.equals("STUDENT") && INFOTYPE.equals("PERSONALINFO")){
+			result=studentInfo.insertOne(searchReqDoc);
+		}
+		else if(IDENTITY.equals("TEACHER") && INFOTYPE.equals("PERSONALINFO")){
+			result=teacherInfo.insertOne(searchReqDoc);
+		}
+		else if(IDENTITY.equals("FACULTY") && INFOTYPE.equals("PERSONALINFO")){
+			result=facultyInfo.insertOne(searchReqDoc);
+		}
+		else if(IDENTITY.equals("MANAGER") && INFOTYPE.equals("PERSONALINFO")){
+			result=managerInfo.insertOne(searchReqDoc);
+		}
+		else if(IDENTITY.equals("STUDENT") && INFOTYPE.equals("ACCOUNT")){
+			result=studentAccounts.insertOne(searchReqDoc);
+		}
+		else if(IDENTITY.equals("TEACHER") && INFOTYPE.equals("ACCOUNT")){
+			result=teacherAccounts.insertOne(searchReqDoc);
+		}
+		else if(IDENTITY.equals("FACULTY") && INFOTYPE.equals("ACCOUNT")){
+			result=facultyAccounts.insertOne(searchReqDoc);
+		}
+		else if(IDENTITY.equals("MANAGER") && INFOTYPE.equals("ACCOUNT")){
+			result=managerAccounts.insertOne(searchReqDoc);
+		}
+
 	}
 }

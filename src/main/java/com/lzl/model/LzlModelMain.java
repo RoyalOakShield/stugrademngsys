@@ -98,7 +98,7 @@ public class LzlModelMain extends Thread{
 	}
 	
 	//"GET" request action's forking code
-	private FindInterable<Document> getForkingCode(String IDENTITY,String INFOTYPE,JSONObject searchReqDoc){
+	private FindInterable<Document> getForkingCode(String IDENTITY,String INFOTYPE,Document searchReqDoc){
 			FindInterable<Document> result;
 			if (INFOTYPE.equals("GRADE")){
 				result=score.find(searchReqDoc);

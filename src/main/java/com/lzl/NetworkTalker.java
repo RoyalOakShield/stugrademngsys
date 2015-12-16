@@ -2,6 +2,7 @@ package com.lzl;
 
 import java.net.*;
 import org.json.*;
+import java.io.IOException;
 
 public class NetworkTalker{
 	private static String address="127.0.0.1";
@@ -15,7 +16,7 @@ public class NetworkTalker{
 	public static final int CONTROLLER=1;
 	public static final int MODEL=2;
 
-	public NetworkTalker(int Vport,int Cport,int Mport,int characFlag){
+	public NetworkTalker(int Vport,int Cport,int Mport,int characFlag) throws SocketException{
 		port_numbers=new int[3];
 		port_numbers[this.VIEW]=Vport;
 		port_numbers[this.CONTROLLER]=Cport;
@@ -31,15 +32,15 @@ public class NetworkTalker{
 		}
 	}
 	
-	public void sendRequest(int des,JSONObject request){
+	public void sendRequest(int des,JSONObject request) throws IOException{
 		byte[] buf=request.toString().getBytes();
-		DatagramPackage dp=new DatagramPackage(buf,buf.length,localHost,this.port_numbers[des]);
+		DatagramPacket dp=new DatagramPacket(buf,buf.length,localHost,this.port_numbers[des]);
 		socket.send(dp);
 	}
 
-	public JSONObject getNextRequest(){
+	public JSONObject getNextRequest() throws IOException{
 		byte[] buf=new byte[2048];
-		DatagramPackage dp=new DatagramPackage(buf,buf.length);
+		DatagramPacket dp=new DatagramPacket(buf,buf.length);
 		socket.receive(dp);
 		String msg=new String(dp.getData(),0,dp.getLength());
 		return new JSONObject(msg);

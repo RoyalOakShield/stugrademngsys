@@ -114,7 +114,7 @@ public class LzlModelMain extends Thread{
 				reply.put("Content",replyContents);
 				
 				//Send back the result
-				talker.send(NetworkTalker.CONTROLLOR,reply);
+				talker.sendRequest(NetworkTalker.CONTROLLOR,reply);
 			}
 		}
 	}

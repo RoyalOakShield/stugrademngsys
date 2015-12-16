@@ -100,7 +100,9 @@ public class LzlModelMain extends Thread{
 			else if(action.equals("DEL")){
 				delForkingCode(identity,infotype,searchReqDoc);
 			}
-			else if(action.equals("SET")){}
+			else if(action.equals("SET")){
+				setForkingCode(identity,infotype,searchReqDoc);
+			}
 			else if(action.equals("GET")){
 				//Query from the database
 				FindIterable<Document> result=getForkingCode(identity,infotype,searchReqDoc);
@@ -228,6 +230,47 @@ public class LzlModelMain extends Thread{
 		}
 		else if(IDENTITY.equals("MANAGER") && INFOTYPE.equals("ACCOUNT")){
 			managerAccounts.deleteOne(searchReqDoc);
+		}
+
+	}
+
+	private void setForkingCode(String IDENTITY,String INFOTYPE,Document searchReqDoc){
+		//Use "ID" key or "Username" key in searchReqDoc to build up a filter document
+		Document filterDoc=null;
+		if(INFOTYPE.equals("ACCOUNT")){
+			filterDoc=new Document("Username",searchReqDoc.getString("Username"));
+		}
+		else{
+			filterDoc=new Document("ID",searchReqDoc.getString("ID"));
+		}
+		Document settingDoc=new Document("$set",searchReqDoc);
+
+		if (INFOTYPE.equals("GRADE")){
+			score.updateOne(filterDoc,settingDoc);
+		}
+		else if(IDENTITY.equals("STUDENT") && INFOTYPE.equals("PERSONALINFO")){
+			studentInfo.updateOne(filterDoc,settingDoc);
+		}
+		else if(IDENTITY.equals("TEACHER") && INFOTYPE.equals("PERSONALINFO")){
+			teacherInfo.updateOne(filterDoc,settingDoc);
+		}
+		else if(IDENTITY.equals("FACULTY") && INFOTYPE.equals("PERSONALINFO")){
+			facultyInfo.updateOne(filterDoc,settingDoc);
+		}
+		else if(IDENTITY.equals("MANAGER") && INFOTYPE.equals("PERSONALINFO")){
+			managerInfo.updateOne(filterDoc,settingDoc);
+		}
+		else if(IDENTITY.equals("STUDENT") && INFOTYPE.equals("ACCOUNT")){
+			studentAccounts.updateOne(filterDoc,settingDoc);
+		}
+		else if(IDENTITY.equals("TEACHER") && INFOTYPE.equals("ACCOUNT")){
+			teacherAccounts.updateOne(filterDoc,settingDoc);
+		}
+		else if(IDENTITY.equals("FACULTY") && INFOTYPE.equals("ACCOUNT")){
+			facultyAccounts.updateOne(filterDoc,settingDoc);
+		}
+		else if(IDENTITY.equals("MANAGER") && INFOTYPE.equals("ACCOUNT")){
+			managerAccounts.updateOne(filterDoc,settingDoc);
 		}
 
 	}

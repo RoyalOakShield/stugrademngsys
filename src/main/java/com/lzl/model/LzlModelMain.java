@@ -66,7 +66,9 @@ public class LzlModelMain extends Thread{
 
 				//Query from the database
 				FindInterable<Document> result;
-				if (infotype.equals("GRADE")){}
+				if (infotype.equals("GRADE")){
+					result=score.find(searchReqDoc);
+				}
 				else if(identity.equals("STUDENT") && infotype.equals("PERSONALINFO")){
 					result=studentInfo.find(searchReqDoc);
 				}
@@ -80,20 +82,39 @@ public class LzlModelMain extends Thread{
 					result=managerInfo.find(searchReqDoc);
 				}
 				else if(identity.equals("STUDENT") && infotype.equals("ACCOUNT")){
-					result=studentInfo.find(searchReqDoc);
+					result=studentAccounts.find(searchReqDoc);
 				}
 				else if(identity.equals("TEACHER") && infotype.equals("ACCOUNT")){
-					result=teacherInfo.find(searchReqDoc);
+					result=teacherAccounts.find(searchReqDoc);
 				}
 				else if(identity.equals("FACULTY") && infotype.equals("ACCOUNT")){
-					result=facultyInfo.find(searchReqDoc);
+					result=facultyAccounts.find(searchReqDoc);
 				}
 				else if(identity.equals("MANAGER") && infotype.equals("ACCOUNT")){
-					result=managerInfo.find(searchReqDoc);
+					result=managerAccounts.find(searchReqDoc);
 				}
 
 				//Build up reply 
+				JSONObject reply=new JSONObject();
+				JSONArray replyContents=new JSONArray();
+				int count=0;
+				result.forEach(new Block<Document>(){
+					@override
+					public void apply(final Document document){
+						count++;
+						replyContents.add(new JSONObject()
+									.put("Identity",identity)
+									.put("Infotype",infotype)
+									.put("Detail",new JSONObject(document.toJson))
+								);
+					}
+				});
+
+				reply.put("Reply",count);
+				reply.put("Content",replyContents);
 				
+				//Send back the result
+				talker.send(NetworkTalker.CONTROLLOR,reply);
 			}
 		}
 	}

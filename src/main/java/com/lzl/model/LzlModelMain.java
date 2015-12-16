@@ -3,6 +3,7 @@ package com.lzl.model;
 import com.lzl.NetworkTalker;
 import org.json.*;
 import com.mongodb.*;
+import com.mongodb.client.*;
 import com.mongodb.event.*;
 import org.bson.*;
 import java.io.IOException;
@@ -29,7 +30,7 @@ public class LzlModelMain extends Thread{
 	//Initialize the connection to MongoDB
 	private void initializeDatabase(){
 		//默认端口27017
-		mongoClient=new MongoClient("localhost","27017"); 
+		mongoClient=new MongoClient("localhost",27017); 
 		mongoDatabase=mongoClient.getDatabase("stugrademngsys");
 
 		studentAccounts=mongoDatabase.getCollection("studentAccounts");
@@ -46,7 +47,7 @@ public class LzlModelMain extends Thread{
 		score=mongoDatabase.getCollection("score");
 
 		try{
-			talker=new NetworkTalker(/*Vport*/,/*Cport*/,/*Mport*/,NetworkTalker.MODEL);
+			talker=new NetworkTalker(6000,6001,6002,NetworkTalker.MODEL);
 		}
 		catch(IOException e){
 			System.err.println("IOException occured while creating NetworkTalker: "+e.toString());
@@ -55,13 +56,14 @@ public class LzlModelMain extends Thread{
 
 	//main loop
 	public void run(){
-		while(1){
+		while(true){
 			//this program accepts exact one request each time
 			//no more
+			JSONObject request;
 			try{
-				JSONObject request=talker.getNextRequest();
+				request=talker.getNextRequest();
 			}
-			catch(IOExcpetion e){
+			catch(IOException e){
 				System.err.println("IOException occured while receiving new request: "+e.toString());
 			}
 			String action=(String)request.get("Request");//get to know what action the request want
@@ -86,13 +88,12 @@ public class LzlModelMain extends Thread{
 			else if(action.equals("SET")){}
 			else if(action.equals("GET")){
 				//Query from the database
-				result=getForkingCode(identity,infotype,searchReqDoc);
+				FindIterable<Document> result=getForkingCode(identity,infotype,searchReqDoc);
 				//Build up reply 
 				result.forEach(new Block<Document>(){
-					@override
 					public void apply(final Document document){
 						count++;
-						replyContents.add(new JSONObject()
+						replyContents.put(new JSONObject()
 									.put("Identity",identity)
 									.put("Infotype",infotype)
 									.put("Detail",new JSONObject(document.toJson()))
@@ -115,8 +116,8 @@ public class LzlModelMain extends Thread{
 	}
 	
 	//"GET" request action's forking code
-	private FindInterable<Document> getForkingCode(String IDENTITY,String INFOTYPE,Document searchReqDoc){
-			FindInterable<Document> result;
+	private FindIterable<Document> getForkingCode(String IDENTITY,String INFOTYPE,Document searchReqDoc){
+			FindIterable<Document> result;
 			if (INFOTYPE.equals("GRADE")){
 				result=score.find(searchReqDoc);
 			}
@@ -152,31 +153,31 @@ public class LzlModelMain extends Thread{
 	private void addForkingCode(String IDENTITY,String INFOTYPE,Document searchReqDoc){
 
 		if (INFOTYPE.equals("GRADE")){
-			result=score.insertOne(searchReqDoc);
+			score.insertOne(searchReqDoc);
 		}
 		else if(IDENTITY.equals("STUDENT") && INFOTYPE.equals("PERSONALINFO")){
-			result=studentInfo.insertOne(searchReqDoc);
+			studentInfo.insertOne(searchReqDoc);
 		}
 		else if(IDENTITY.equals("TEACHER") && INFOTYPE.equals("PERSONALINFO")){
-			result=teacherInfo.insertOne(searchReqDoc);
+			teacherInfo.insertOne(searchReqDoc);
 		}
 		else if(IDENTITY.equals("FACULTY") && INFOTYPE.equals("PERSONALINFO")){
-			result=facultyInfo.insertOne(searchReqDoc);
+			facultyInfo.insertOne(searchReqDoc);
 		}
 		else if(IDENTITY.equals("MANAGER") && INFOTYPE.equals("PERSONALINFO")){
-			result=managerInfo.insertOne(searchReqDoc);
+			managerInfo.insertOne(searchReqDoc);
 		}
 		else if(IDENTITY.equals("STUDENT") && INFOTYPE.equals("ACCOUNT")){
-			result=studentAccounts.insertOne(searchReqDoc);
+			studentAccounts.insertOne(searchReqDoc);
 		}
 		else if(IDENTITY.equals("TEACHER") && INFOTYPE.equals("ACCOUNT")){
-			result=teacherAccounts.insertOne(searchReqDoc);
+			teacherAccounts.insertOne(searchReqDoc);
 		}
 		else if(IDENTITY.equals("FACULTY") && INFOTYPE.equals("ACCOUNT")){
-			result=facultyAccounts.insertOne(searchReqDoc);
+			facultyAccounts.insertOne(searchReqDoc);
 		}
 		else if(IDENTITY.equals("MANAGER") && INFOTYPE.equals("ACCOUNT")){
-			result=managerAccounts.insertOne(searchReqDoc);
+			managerAccounts.insertOne(searchReqDoc);
 		}
 
 	}

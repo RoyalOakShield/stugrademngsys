@@ -27,6 +27,16 @@ public class LzlModelMain extends Thread{
 	//Communication component to controllor
 	private NetworkTalker talker; 
 	
+	//nessary thins to build up a reply 
+	private JSONObject reply;
+	private JSONArray replyContents;
+	private int count=0;
+	private String identity;
+	private String infotype;
+
+	public LzlModelMain(){
+		initializeDatabase();
+	}
 	//Initialize the connection to MongoDB
 	private void initializeDatabase(){
 		//默认端口27017
@@ -59,26 +69,29 @@ public class LzlModelMain extends Thread{
 		while(true){
 			//this program accepts exact one request each time
 			//no more
-			JSONObject request;
+			JSONObject request=new JSONObject();
 			try{
 				request=talker.getNextRequest();
 			}
 			catch(IOException e){
 				System.err.println("IOException occured while receiving new request: "+e.toString());
 			}
+						//DEBUG
+						System.out.println(request);
+						//~DEBUG
 			String action=(String)request.get("Request");//get to know what action the request want
 			JSONObject firstDetail=(JSONObject)request.get("Detail"); // get the value of first "Detial" key to convenient next stages
 
 			//do some common work for all situations
-			String identity=(String)firstDetail.get("Identity");
-			String infotype=(String)firstDetail.get("Infotype");
+			identity=(String)firstDetail.get("Identity");
+			infotype=(String)firstDetail.get("Infotype");
 			JSONObject secondDetail=(JSONObject)firstDetail.get("Detail");
 			Document searchReqDoc=Document.parse(secondDetail.toString());
 			
 			//nessary thins to build up a reply 
-			JSONObject reply=new JSONObject();
-			JSONArray replyContents=new JSONArray();
-			int count=0;
+			reply=new JSONObject();
+			replyContents=new JSONArray();
+			count=0;
 
 			//Work due to different situations
 			if(action.equals("ADD")){
@@ -93,6 +106,9 @@ public class LzlModelMain extends Thread{
 				result.forEach(new Block<Document>(){
 					public void apply(final Document document){
 						count++;
+						//DEBUG
+						System.out.println(document);
+						//~DEBUG
 						replyContents.put(new JSONObject()
 									.put("Identity",identity)
 									.put("Infotype",infotype)
@@ -107,7 +123,7 @@ public class LzlModelMain extends Thread{
 			reply.put("Reply",count);
 
 			try{
-				talker.sendRequest(NetworkTalker.CONTROLLOR,reply);
+				talker.sendRequest(NetworkTalker.CONTROLLER,reply);
 			}
 			catch(IOException e){
 				System.err.println("IOException occured while sending new request: "+e.toString());
@@ -117,7 +133,7 @@ public class LzlModelMain extends Thread{
 	
 	//"GET" request action's forking code
 	private FindIterable<Document> getForkingCode(String IDENTITY,String INFOTYPE,Document searchReqDoc){
-			FindIterable<Document> result;
+			FindIterable<Document> result=null;
 			if (INFOTYPE.equals("GRADE")){
 				result=score.find(searchReqDoc);
 			}

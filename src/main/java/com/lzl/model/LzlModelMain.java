@@ -76,10 +76,12 @@ public class LzlModelMain extends Thread{
 			catch(IOException e){
 				System.err.println("IOException occured while receiving new request: "+e.toString());
 			}
-						//DEBUG
-						System.out.println(request);
-						//~DEBUG
 			String action=(String)request.get("Request");//get to know what action the request want
+			//Check if it is "EXIT"
+			if(action.equals("EXIT")){
+				talker.close();
+				break;
+			}
 			JSONObject firstDetail=(JSONObject)request.get("Detail"); // get the value of first "Detial" key to convenient next stages
 
 			//do some common work for all situations
@@ -110,9 +112,6 @@ public class LzlModelMain extends Thread{
 				result.forEach(new Block<Document>(){
 					public void apply(final Document document){
 						count++;
-						//DEBUG
-						System.out.println(document);
-						//~DEBUG
 						replyContents.put(new JSONObject()
 									.put("Identity",identity)
 									.put("Infotype",infotype)

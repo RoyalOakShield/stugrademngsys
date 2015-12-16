@@ -2,7 +2,7 @@ Model部分可发送和接收格式说明
 
 第一部分： 可接收格式
 {
-	"Request":/* "ADD","DEL","SET","GET" */,
+	"Request":/* "ADD","DEL","SET","GET","EXIT" */,
 	"Detail":{
 		"Identity":/* "STUDENT","TEACHER","FACULTY","MANAGER" */,
 		"Infotype":/* "PERSONALINFO","GRADE","ACCOUNT" */,

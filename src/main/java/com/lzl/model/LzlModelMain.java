@@ -105,7 +105,7 @@ public class LzlModelMain extends Thread{
 						replyContents.add(new JSONObject()
 									.put("Identity",identity)
 									.put("Infotype",infotype)
-									.put("Detail",new JSONObject(document.toJson))
+									.put("Detail",new JSONObject(document.toJson()))
 								);
 					}
 				});

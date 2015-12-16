@@ -75,35 +75,7 @@ public class LzlModelMain extends Thread{
 			else if(action.equals("SET")){}
 			else if(action.equals("GET")){
 				//Query from the database
-				FindInterable<Document> result;
-				if (infotype.equals("GRADE")){
-					result=score.find(searchReqDoc);
-				}
-				else if(identity.equals("STUDENT") && infotype.equals("PERSONALINFO")){
-					result=studentInfo.find(searchReqDoc);
-				}
-				else if(identity.equals("TEACHER") && infotype.equals("PERSONALINFO")){
-					result=teacherInfo.find(searchReqDoc);
-				}
-				else if(identity.equals("FACULTY") && infotype.equals("PERSONALINFO")){
-					result=facultyInfo.find(searchReqDoc);
-				}
-				else if(identity.equals("MANAGER") && infotype.equals("PERSONALINFO")){
-					result=managerInfo.find(searchReqDoc);
-				}
-				else if(identity.equals("STUDENT") && infotype.equals("ACCOUNT")){
-					result=studentAccounts.find(searchReqDoc);
-				}
-				else if(identity.equals("TEACHER") && infotype.equals("ACCOUNT")){
-					result=teacherAccounts.find(searchReqDoc);
-				}
-				else if(identity.equals("FACULTY") && infotype.equals("ACCOUNT")){
-					result=facultyAccounts.find(searchReqDoc);
-				}
-				else if(identity.equals("MANAGER") && infotype.equals("ACCOUNT")){
-					result=managerAccounts.find(searchReqDoc);
-				}
-
+				result=getForkingCode(identity,infotype,searchReqDoc);
 				//Build up reply 
 				result.forEach(new Block<Document>(){
 					@override
@@ -123,5 +95,39 @@ public class LzlModelMain extends Thread{
 			//Send back the result
 			talker.sendRequest(NetworkTalker.CONTROLLOR,reply);
 		}
+	}
+	
+	//"GET" request action's forking code
+	private FindInterable<Document> getForkingCode(String IDENTITY,String INFOTYPE,JSONObject searchReqDoc){
+			FindInterable<Document> result;
+			if (INFOTYPE.equals("GRADE")){
+				result=score.find(searchReqDoc);
+			}
+			else if(IDENTITY.equals("STUDENT") && INFOTYPE.equals("PERSONALINFO")){
+				result=studentInfo.find(searchReqDoc);
+			}
+			else if(IDENTITY.equals("TEACHER") && INFOTYPE.equals("PERSONALINFO")){
+				result=teacherInfo.find(searchReqDoc);
+			}
+			else if(IDENTITY.equals("FACULTY") && INFOTYPE.equals("PERSONALINFO")){
+				result=facultyInfo.find(searchReqDoc);
+			}
+			else if(IDENTITY.equals("MANAGER") && INFOTYPE.equals("PERSONALINFO")){
+				result=managerInfo.find(searchReqDoc);
+			}
+			else if(IDENTITY.equals("STUDENT") && INFOTYPE.equals("ACCOUNT")){
+				result=studentAccounts.find(searchReqDoc);
+			}
+			else if(IDENTITY.equals("TEACHER") && INFOTYPE.equals("ACCOUNT")){
+				result=teacherAccounts.find(searchReqDoc);
+			}
+			else if(IDENTITY.equals("FACULTY") && INFOTYPE.equals("ACCOUNT")){
+				result=facultyAccounts.find(searchReqDoc);
+			}
+			else if(IDENTITY.equals("MANAGER") && INFOTYPE.equals("ACCOUNT")){
+				result=managerAccounts.find(searchReqDoc);
+			}
+			
+			return result;
 	}
 }

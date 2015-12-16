@@ -5,6 +5,7 @@ import org.json.*;
 import com.mongodb.*;
 import com.mongodb.event.*;
 import org.bson.*;
+import java.io.IOException;
 
 public class LzlModelMain extends Thread{
 	/* 本后端程序只连接一个MongoDB后端和只使用一个MongoDB数据库，
@@ -44,7 +45,12 @@ public class LzlModelMain extends Thread{
 
 		score=mongoDatabase.getCollection("score");
 
-		talker=new NetworkTalker(/*Vport*/,/*Cport*/,/*Mport*/,NetworkTalker.MODEL);
+		try{
+			talker=new NetworkTalker(/*Vport*/,/*Cport*/,/*Mport*/,NetworkTalker.MODEL);
+		}
+		catch(IOException e){
+			System.err.println("IOException occured while creating NetworkTalker: "+e.toString());
+		}
 	}
 
 	//main loop
@@ -52,7 +58,12 @@ public class LzlModelMain extends Thread{
 		while(1){
 			//this program accepts exact one request each time
 			//no more
-			JSONObject request=talker.getNextRequest();
+			try{
+				JSONObject request=talker.getNextRequest();
+			}
+			catch(IOExcpetion e){
+				System.err.println("IOException occured while receiving new request: "+e.toString());
+			}
 			String action=(String)request.get("Request");//get to know what action the request want
 			JSONObject firstDetail=(JSONObject)request.get("Detail"); // get the value of first "Detial" key to convenient next stages
 
@@ -93,7 +104,13 @@ public class LzlModelMain extends Thread{
 			}
 			//Send back the result
 			reply.put("Reply",count);
-			talker.sendRequest(NetworkTalker.CONTROLLOR,reply);
+
+			try{
+				talker.sendRequest(NetworkTalker.CONTROLLOR,reply);
+			}
+			catch(IOException e){
+				System.err.println("IOException occured while sending new request: "+e.toString());
+			}
 		}
 	}
 	

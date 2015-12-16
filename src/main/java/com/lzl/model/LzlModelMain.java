@@ -69,7 +69,7 @@ public class LzlModelMain extends Thread{
 		while(true){
 			//this program accepts exact one request each time
 			//no more
-			JSONObject request=new JSONObject();
+			JSONObject request=null;
 			try{
 				request=talker.getNextRequest();
 			}
@@ -97,7 +97,9 @@ public class LzlModelMain extends Thread{
 			if(action.equals("ADD")){
 				addForkingCode(identity,infotype,searchReqDoc);
 			}
-			else if(action.equals("DEL")){}
+			else if(action.equals("DEL")){
+				delForkingCode(identity,infotype,searchReqDoc);
+			}
 			else if(action.equals("SET")){}
 			else if(action.equals("GET")){
 				//Query from the database
@@ -194,6 +196,38 @@ public class LzlModelMain extends Thread{
 		}
 		else if(IDENTITY.equals("MANAGER") && INFOTYPE.equals("ACCOUNT")){
 			managerAccounts.insertOne(searchReqDoc);
+		}
+
+	}
+
+	private void delForkingCode(String IDENTITY,String INFOTYPE,Document searchReqDoc){
+
+		if (INFOTYPE.equals("GRADE")){
+			score.deleteOne(searchReqDoc);
+		}
+		else if(IDENTITY.equals("STUDENT") && INFOTYPE.equals("PERSONALINFO")){
+			studentInfo.deleteOne(searchReqDoc);
+		}
+		else if(IDENTITY.equals("TEACHER") && INFOTYPE.equals("PERSONALINFO")){
+			teacherInfo.deleteOne(searchReqDoc);
+		}
+		else if(IDENTITY.equals("FACULTY") && INFOTYPE.equals("PERSONALINFO")){
+			facultyInfo.deleteOne(searchReqDoc);
+		}
+		else if(IDENTITY.equals("MANAGER") && INFOTYPE.equals("PERSONALINFO")){
+			managerInfo.deleteOne(searchReqDoc);
+		}
+		else if(IDENTITY.equals("STUDENT") && INFOTYPE.equals("ACCOUNT")){
+			studentAccounts.deleteOne(searchReqDoc);
+		}
+		else if(IDENTITY.equals("TEACHER") && INFOTYPE.equals("ACCOUNT")){
+			teacherAccounts.deleteOne(searchReqDoc);
+		}
+		else if(IDENTITY.equals("FACULTY") && INFOTYPE.equals("ACCOUNT")){
+			facultyAccounts.deleteOne(searchReqDoc);
+		}
+		else if(IDENTITY.equals("MANAGER") && INFOTYPE.equals("ACCOUNT")){
+			managerAccounts.deleteOne(searchReqDoc);
 		}
 
 	}

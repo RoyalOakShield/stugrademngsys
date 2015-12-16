@@ -55,15 +55,25 @@ public class LzlModelMain extends Thread{
 			JSONObject request=talker.getNextRequest();
 			String action=(String)request.get("Request");//get to know what action the request want
 			JSONObject firstDetail=(JSONObject)request.get("Detail"); // get the value of first "Detial" key to convenient next stages
-			if(action.equals("ADD")){}
+
+			//do some common work for all situations
+			String identity=(String)firstDetail.get("Identity");
+			String infotype=(String)firstDetail.get("Infotype");
+			JSONObject secondDetail=(JSONObject)firstDetail.get("Detail");
+			Document searchReqDoc=Document.parse(secondDetail.toString());
+			
+			//nessary thins to build up a reply 
+			JSONObject reply=new JSONObject();
+			JSONArray replyContents=new JSONArray();
+			int count=0;
+
+			//Work due to different situations
+			if(action.equals("ADD")){
+				
+			}
 			else if(action.equals("DEL")){}
 			else if(action.equals("SET")){}
 			else if(action.equals("GET")){
-				String identity=(String)firstDetail.get("Identity");
-				String infotype=(String)firstDetail.get("Infotype");
-				JSONObject secondDetail=(JSONObject)firstDetail.get("Detail");
-				Document searchReqDoc=Document.parse(secondDetail.toString());
-
 				//Query from the database
 				FindInterable<Document> result;
 				if (infotype.equals("GRADE")){
@@ -95,9 +105,6 @@ public class LzlModelMain extends Thread{
 				}
 
 				//Build up reply 
-				JSONObject reply=new JSONObject();
-				JSONArray replyContents=new JSONArray();
-				int count=0;
 				result.forEach(new Block<Document>(){
 					@override
 					public void apply(final Document document){
@@ -112,10 +119,9 @@ public class LzlModelMain extends Thread{
 
 				reply.put("Reply",count);
 				reply.put("Content",replyContents);
-				
-				//Send back the result
-				talker.sendRequest(NetworkTalker.CONTROLLOR,reply);
 			}
+			//Send back the result
+			talker.sendRequest(NetworkTalker.CONTROLLOR,reply);
 		}
 	}
 }

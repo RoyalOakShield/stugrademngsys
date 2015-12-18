@@ -7,4 +7,11 @@ repositories {
 dependencies {
 	compile 'org.mongodb:mongodb-driver:3.2.0'
 	compile 'org.json:json:20151123'
+	
+	testCompile 'junit:junit:4.12'
+}
+
+test{
+	useJUnit()
+	testLogging.showStandardStreams=true
 }

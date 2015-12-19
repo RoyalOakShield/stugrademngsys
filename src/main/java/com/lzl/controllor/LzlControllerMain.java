@@ -83,7 +83,10 @@ public void run(){
 			}
 		}
 		else if (action.equals("EXIT")){
+			LzlModelMain.stop();
+			LzlViewMain.stop();
 			talker.close();
+			this.stop();
 		}
 		else{
 			//change form if necessary

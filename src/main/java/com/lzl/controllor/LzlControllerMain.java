@@ -58,8 +58,23 @@ public void run(){
 ":"ACCOUNT","Detail":{"Username":"Lizzy","Password"："123456"}}}
 */
 		if(action.equals("LOGIN")){
-			JSONObject username=identity.get("Username");
-			Password password=;
+			JSONObject username=secondDetail.get("Username");
+			Password passwordV=secondDetail.get("Password");
+			JSONObject requestCorrectPassword=new JSONObject()
+													.put("Request","GET")
+													.put("Detail",new JSONObject()
+																					.put("Identity",identity)
+																					.put("Infotype",infotype)
+																					.put("Detail",new JSONObject()
+																													.put("Username",username)));
+			talker.sendRequest(requestCorrectPassword);
+			JSONObject resultOfCorrectPassword=null;
+			try{
+				resultOfCorrectPassword=talker.getNextRequest();
+			}
+			catch(IOException e){}
+
+			passwordM=(String)((JSONObject)((JSONObject)resultOfCorrectPassword.get("Detail")).get("Detail")).get("Password");
 			if(passwordV=passwordM){
 				return true;
 			}

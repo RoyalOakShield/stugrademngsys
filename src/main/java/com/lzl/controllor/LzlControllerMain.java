@@ -33,6 +33,7 @@ public void run(){
 		//single Thread
 		JSONObject requestV=null;//request from view
 		JSONObject requestM=null;//request from model
+		JSONObject requestBack=null;//M->C->V
 		try{
 			requestV=getNextRequest();
 		}catch(IOException e){
@@ -67,12 +68,14 @@ public void run(){
 																					.put("Infotype",infotype)
 																					.put("Detail",new JSONObject()
 																													.put("Username",username)));
-			talker.sendRequest(requestCorrectPassword);
+			talker.sendRequest(NetworkTalker.MODEL,requestCorrectPassword);
 			JSONObject resultOfCorrectPassword=null;
 			try{
 				resultOfCorrectPassword=talker.getNextRequest();
 			}
-			catch(IOException e){}
+			catch(IOException e){
+				System.err.println("IOException occured"+e.toString());
+			}
 
 			passwordM=(String)((JSONObject)((JSONObject)resultOfCorrectPassword.get("Detail")).get("Detail")).get("Password");
 			if(passwordV=passwordM){
@@ -80,13 +83,14 @@ public void run(){
 			}
 		}
 		else{
-			talk.sendRequest(NetworkTalker.Model,action);
-			talk.sendRequest(NetworkTalker.Model,firstDetail);
-			talk.sendRequest(NetworkTalker.Model,identity);
-			talk.sendRequest(NetworkTalker.Model,infotype);
-			talk.sendRequest(NetworkTalker.Model,secondDetail);
+			//change form if necessary
+			talker.sendRequest(NetworkTalker.Model,action);
+			talker.sendRequest(NetworkTalker.Model,firstDetail);
+			talker.sendRequest(NetworkTalker.Model,identity);
+			talker.sendRequest(NetworkTalker.Model,infotype);
+			talker.sendRequest(NetworkTalker.Model,secondDetail);
 		}
-		//semd back to view
+		//send back to view
 
 	}
 

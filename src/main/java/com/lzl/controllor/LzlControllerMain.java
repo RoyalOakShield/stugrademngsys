@@ -16,7 +16,7 @@ public class LzlControllerMain extends Thread{
 	public LzlControllerMain(){//setup controller first then vieW & Model
 		initializeController();
 		new LzlModelMain();
-		new LzlViewmain();
+		new LzlViewMain();
 	}
 
 private	void initializeController{
@@ -82,6 +82,9 @@ public void run(){
 				return true;
 			}
 		}
+		else if (action.equals("EXIT")){
+			talker.close();
+		}
 		else{
 			//change form if necessary
 			talker.sendRequest(NetworkTalker.Model,action);
@@ -91,7 +94,15 @@ public void run(){
 			talker.sendRequest(NetworkTalker.Model,secondDetail);
 		}
 		//send back to view
-
+		try{
+			requestBack=getNextRequest();
+		}catch(IOException e){
+			System.err.println("IOException occured in CONTROLLER while receiving back from Model: "+e.toString());
+		}
+		talker.sendRequest(NetworkTalker.Veiw,action);
+		talker.sendRequest(NetworkTalker.View,firstDetail);
+		talker.sendRequest(NetworkTalker.View,identity);
+		talker.sendRequest(NetworkTalker.View,infotype);
+		talker.sendRequest(NetworkTalker.View,secondDetail);
 	}
-
 }

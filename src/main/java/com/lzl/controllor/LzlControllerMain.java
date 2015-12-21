@@ -32,7 +32,7 @@ public void run(){
 	while(true){
 		//single Thread
 		JSONObject requestV=null;//request from view
-		JSONObject requestM=null;//request from model
+		JSONObject requestM=null;//request to model
 		JSONObject requestBack=null;//M->C->V
 		try{
 			requestV=getNextRequest();
@@ -79,14 +79,14 @@ public void run(){
 
 			passwordM=(String)((JSONObject)((JSONObject)resultOfCorrectPassword.get("Detail")).get("Detail")).get("Password");
 			if(passwordV=passwordM){
-				return true;
+				talker.sendRequest(NetworkTalker.View,);//Return What????
 			}
 		}
 		else if (action.equals("EXIT")){
-			LzlModelMain.stop();
+			talker.sendRequest(NetworkTalker.Model,new JSONObject("Request","EXIT"));
 			LzlViewMain.stop();
-			talker.close();
 			this.stop();
+			talker.close();
 		}
 		else{
 			//change form if necessary
@@ -107,5 +107,7 @@ public void run(){
 		talker.sendRequest(NetworkTalker.View,identity);
 		talker.sendRequest(NetworkTalker.View,infotype);
 		talker.sendRequest(NetworkTalker.View,secondDetail);
-	}
+	}//NetworkTalker里为什么没有返回的函数？？
 }
+//get(name)
+//put(name,value)

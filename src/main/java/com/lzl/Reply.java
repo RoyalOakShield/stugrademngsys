@@ -66,4 +66,11 @@ public class Reply {
 		jsonDoc.put("Content",content);
 		return jsonDoc;
 	}
+
+	public int getContentLength(){
+		return content.length();
+	}
+	public JSONObject getContentElemByIndex(int index){
+		return content.getJSONObject(index);
+	}
 }

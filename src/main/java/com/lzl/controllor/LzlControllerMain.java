@@ -88,12 +88,12 @@ public void run(){
 		else if (action.equals("EXIT")){
 			talker.sendRequest(NetworkTalker.Model,new JSONObject("Request","EXIT"));
 			LzlViewMain.stop();//LAST THING
-			this.stop();
 			talker.close();
+			this.stop();
 		}
 		else{
 			//to MODEL
-				talker.sendRequest(NetworkTalker.Model,new Request(action,identity,infotype,secondDetail).toJSON());
+			talker.sendRequest(NetworkTalker.Model,new Request(action,identity,infotype,secondDetail).toJSON());
 			//talker.sendRequest(NetworkTalker.Model,action);
 			//talker.sendRequest(NetworkTalker.Model,identity);
 			//talker.sendRequest(NetworkTalker.Model,infotype);

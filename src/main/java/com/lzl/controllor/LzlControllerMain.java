@@ -32,7 +32,7 @@ public void run(){
 	while(true){
 		//single Thread
 		JSONObject requestV=null;//request from view
-		JSONObject requestM=null;//request to model
+		//JSONObject requestM=null;//request to model
 		JSONObject requestBack=null;//M->C->V
 		try{
 			requestV=getNextRequest();
@@ -79,22 +79,25 @@ public void run(){
 
 			passwordM=(String)((JSONObject)((JSONObject)resultOfCorrectPassword.get("Detail")).get("Detail")).get("Password");
 			if(passwordV=passwordM){
-				talker.sendRequest(NetworkTalker.View,);//Return What????
+				talker.sendRequest(NetworkTalker.View,(new reply(1)).toJSON());//Return
+			}
+			else{
+				talker.sendRequest(NetworkTalker.View,(new reply(0)).toJSON());
 			}
 		}
 		else if (action.equals("EXIT")){
 			talker.sendRequest(NetworkTalker.Model,new JSONObject("Request","EXIT"));
-			LzlViewMain.stop();
+			LzlViewMain.stop();//LAST THING
 			this.stop();
 			talker.close();
 		}
 		else{
-			//change form if necessary
-			talker.sendRequest(NetworkTalker.Model,action);
-			talker.sendRequest(NetworkTalker.Model,firstDetail);
-			talker.sendRequest(NetworkTalker.Model,identity);
-			talker.sendRequest(NetworkTalker.Model,infotype);
-			talker.sendRequest(NetworkTalker.Model,secondDetail);
+			//to MODEL
+				talker.sendRequest(NetworkTalker.Model,new Request(action,identity,infotype,secondDetail).toJSON());
+			//talker.sendRequest(NetworkTalker.Model,action);
+			//talker.sendRequest(NetworkTalker.Model,identity);
+			//talker.sendRequest(NetworkTalker.Model,infotype);
+			//talker.sendRequest(NetworkTalker.Model,secondDetail);
 		}
 		//send back to view
 		try{
@@ -102,12 +105,12 @@ public void run(){
 		}catch(IOException e){
 			System.err.println("IOException occured in CONTROLLER while receiving back from Model: "+e.toString());
 		}
-		talker.sendRequest(NetworkTalker.Veiw,action);
-		talker.sendRequest(NetworkTalker.View,firstDetail);
-		talker.sendRequest(NetworkTalker.View,identity);
-		talker.sendRequest(NetworkTalker.View,infotype);
-		talker.sendRequest(NetworkTalker.View,secondDetail);
-	}//NetworkTalker里为什么没有返回的函数？？
+		talker.sendRequest(NetworkTalker.View,requestBack);
+		//talker.sendRequest(NetworkTalker.Veiw,action);
+		//talker.sendRequest(NetworkTalker.View,identity);
+		//talker.sendRequest(NetworkTalker.View,infotype);
+		//talker.sendRequest(NetworkTalker.View,secondDetail);
+	}
 }
 //get(name)
 //put(name,value)

@@ -1,8 +1,13 @@
-import java.io.IOException;
-import java.net.InetSocketAddress;
+package com.lzl.view;
 
+import java.net.InetSocketAddress;
+import java.net.URL;
+import java.net.URI;
+
+import java.io.IOException;
 import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
+import java.io.FileInputStream;
 
 import org.json.*;
 import com.lzl.NetworkTalker;
@@ -12,7 +17,7 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.Headers;
 
-public class LzlWebServer(){
+public class LzlWebServer{
 	//Web server instance
 	protected HttpServer server;
 	
@@ -21,12 +26,19 @@ public class LzlWebServer(){
 		server=HttpServer.create(new InetSocketAddress(8000),0);
 		server.createContext("/reqrly",new RequestReplyHandler());
 		server.createContext("/resource/picture",new PictureHandler());
+		server.createContext("/",new HtmlPageHandler());
 		server.setExecutor(null);
 	}
 
 	public void start(){
+
+//debug
+System.out.println("Server Started");
+//~debug
+
 		server.start();
 	}
+
 	public void stop(){
 		server.stop(2);
 	}
@@ -34,7 +46,12 @@ public class LzlWebServer(){
 	static class RequestReplyHandler implements HttpHandler{
 		protected NetworkTalker talker;
 		public RequestReplyHandler(){
-			talker=new NetworkTalker(6000,6001,6002,NetworkTalker.VIEW);
+			try{
+				talker=new NetworkTalker(6000,6001,6002,NetworkTalker.VIEW);
+			}
+			catch(Exception e){
+				System.err.println(e);
+			}
 		}
 
 		public void handle(HttpExchange t) throws IOException{
@@ -59,6 +76,46 @@ public class LzlWebServer(){
 			DataOutputStream replyStream=new DataOutputStream(t.getResponseBody());
 			replyStream.writeBytes(replyContent);
 			replyStream.close();
+		}
+	}
+
+	static class PictureHandler implements HttpHandler{
+		public void handle(HttpExchange t) throws IOException{
+			//Get the file path
+			String picPath=t.getRequestURI().toString();
+			//Read data from file
+			FileInputStream picFileStream=new FileInputStream(PictureHandler.class.getResource(picPath).getFile());
+			byte[] picBuf=new byte[picFileStream.available()];
+			picFileStream.read(picBuf,0,picBuf.length);
+			picFileStream.close();
+			//set response content-type and reply head
+			Headers h=t.getResponseHeaders();
+			h.add("Content-Type","image/png");
+			t.sendResponseHeaders(200,picBuf.length);
+			//Write image content into http response
+			DataOutputStream responseStream=new DataOutputStream(t.getResponseBody());
+			responseStream.write(picBuf,0,picBuf.length);
+			responseStream.close();
+		}
+	}
+
+	static class HtmlPageHandler implements HttpHandler{
+		public void handle(HttpExchange t) throws IOException{
+			//Extract file name with slash in the front
+			String requestHtml=t.getRequestURI().toString();
+			//Read data from file
+			FileInputStream htmlFileStream=new FileInputStream(PictureHandler.class.getResource("/htmls"+requestHtml).getFile());
+			byte[] htmlBuf=new byte[htmlFileStream.available()];
+			htmlFileStream.read(htmlBuf,0,htmlBuf.length);
+			htmlFileStream.close();
+			//set response content-type and reply head
+			Headers h=t.getResponseHeaders();
+			h.add("Content-Type","text/html");
+			t.sendResponseHeaders(200,htmlBuf.length);
+			//Write image content into http response
+			DataOutputStream responseStream=new DataOutputStream(t.getResponseBody());
+			responseStream.write(htmlBuf,0,htmlBuf.length);
+			responseStream.close();
 		}
 	}
 }

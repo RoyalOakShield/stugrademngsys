@@ -20,6 +20,7 @@ public class LzlWebServer(){
 	public LzlWebServer() throws IOException{
 		server=HttpServer.create(new InetSocketAddress(8000),0);
 		server.createContext("/reqrly",new RequestReplyHandler());
+		server.createContext("/resource/picture",new PictureHandler());
 		server.setExecutor(null);
 	}
 

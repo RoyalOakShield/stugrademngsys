@@ -31,11 +31,6 @@ public class LzlWebServer{
 	}
 
 	public void start(){
-
-//debug
-System.out.println("Server Started");
-//~debug
-
 		server.start();
 	}
 

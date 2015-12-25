@@ -19,5 +19,6 @@ public class WebServerTest extends TestCase{
 		catch(Exception e){
 			System.err.println(e);
 		}
+		server.stop();
 	}
 }

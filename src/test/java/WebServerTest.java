@@ -14,7 +14,7 @@ public class WebServerTest extends TestCase{
 		}
 
 		try{
-			Thread.sleep(50000);
+			Thread.sleep(5000000);
 		}
 		catch(Exception e){
 			System.err.println(e);

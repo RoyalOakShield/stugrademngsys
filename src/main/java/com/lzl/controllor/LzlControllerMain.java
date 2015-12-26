@@ -1,6 +1,8 @@
-﻿package com.lzl.controller;
+package com.lzl.controllor;
 
 import com.lzl.NetworkTalker;
+import com.lzl.Reply;
+import com.lzl.Request;
 import org.json.*;
 import java.io.*;
 
@@ -15,11 +17,11 @@ public class LzlControllerMain extends Thread{
 
 	public LzlControllerMain(){//setup controller first then vieW & Model
 		initializeController();
-		new LzlModelMain();
-		new LzlViewMain();
+		//new LzlModelMain();
+		//new LzlViewMain();
 	}
 
-private	void initializeController{
+private	void initializeController(){
 	try{
 		talker=new NetworkTalker(6000,6001,6002,NetworkTalker.CONTROLLER);
 	}
@@ -62,12 +64,12 @@ public void run(){
 			JSONObject username=secondDetail.get("Username");
 			Password passwordV=secondDetail.get("Password");
 			JSONObject requestCorrectPassword=new JSONObject()
-													.put("Request","GET")
-													.put("Detail",new JSONObject()
-																					.put("Identity",identity)
-																					.put("Infotype",infotype)
-																					.put("Detail",new JSONObject()
-																													.put("Username",username)));
+										.put("Request","GET")
+										.put("Detail",new JSONObject()
+										.put("Identity",identity)
+										.put("Infotype",infotype)
+										.put("Detail",new JSONObject()
+										.put("Username",username)));
 			talker.sendRequest(NetworkTalker.MODEL,requestCorrectPassword);
 			JSONObject resultOfCorrectPassword=null;
 			try{
@@ -78,18 +80,19 @@ public void run(){
 			}
 
 			passwordM=(String)((JSONObject)((JSONObject)resultOfCorrectPassword.get("Detail")).get("Detail")).get("Password");
-			if(passwordV=passwordM){
-				talker.sendRequest(NetworkTalker.View,(new reply(1)).toJSON());//Return
+			if(passwordV.equals(passwordM)){
+				talker.sendRequest(NetworkTalker.View,(new Reply(1)).toJSON());//Return
 			}
 			else{
-				talker.sendRequest(NetworkTalker.View,(new reply(0)).toJSON());
+				talker.sendRequest(NetworkTalker.View,(new Reply(0)).toJSON());
 			}
 		}
 		else if (action.equals("EXIT")){
 			talker.sendRequest(NetworkTalker.Model,new JSONObject("Request","EXIT"));
-			LzlViewMain.stop();//LAST THING
+			//LzlViewMain.stop();//LAST THING
 			talker.close();
-			this.stop();
+			//this.stop();
+			break;
 		}
 		else{
 			//to MODEL
@@ -112,5 +115,4 @@ public void run(){
 		//talker.sendRequest(NetworkTalker.View,secondDetail);
 	}
 }
-//get(name)
-//put(name,value)
+}

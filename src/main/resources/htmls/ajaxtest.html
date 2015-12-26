@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>AjaxRequestSendTest</h2>
+
+<button type="button" onclick="sendOut()">Send Request</button>
+
+<p id="replyShowPlace"></p>
+
+<script>
+function sendOut() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+	document.getElementById("replyShowPlace").textContent=xhttp.responseText;
+    }
+  };
+  xhttp.open("POST", "reqrly", true);
+  xhttp.setRequestHeader('Content-Type', 'application/json');
+  xhttp.send('{"test":"helloworld"}');
+}
+</script>
+
+</body>
+</html>
+

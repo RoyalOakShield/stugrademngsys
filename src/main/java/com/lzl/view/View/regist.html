@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="type/html; charset=utf-8">
+	<title>Regist</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<style type="text/css">
+		body{
+			background-image: url(resource/picture/background1.png);
+			padding:0px;
+			margin:0px;
+		}
+		.form-group{
+			width: 400px;
+		}
+	</style>
+</head>
+<body>
+<h1>Regist</h1>
+<form role="form">
+	<div class="form-group">
+		Name:<input type="text" class="form-control" name="Regist_usrname" placeholder="Your name,please"/><br />
+		Password:<input type="password" class="form-control" name="Regist_password" placeholder="Password,please"/><br />
+		Confirm:<input type="password" class="form-control" name="Regist_confirm" placeholder="Try again"/><br />
+		Identity:<select class="form-control">
+			<option>student</option>
+			<option>teacher</option>
+			<option>fucultyman</option>
+		</select>
+	</div>
+</form>
+	<input type="Submit" class="submit" name="Submit" value="OK"/>
+</body>
+</html>

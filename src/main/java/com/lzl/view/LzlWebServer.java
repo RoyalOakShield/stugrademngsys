@@ -119,9 +119,6 @@ public class LzlWebServer{
 
 	static class JSHandler implements HttpHandler{
 		public void handle(HttpExchange t) throws IOException{
-
-System.out.println("JavaScript Request Received!");
-
 			//Extract file name with slash in the front
 			String requestJS=t.getRequestURI().toString();
 			//Read data from file

@@ -11,6 +11,7 @@
 <script>
 function sendOut() {
   var xhttp = new XMLHttpRequest();
+  var requestJSON=JSON.parse('{"hello":"world"}');
   xhttp.onreadystatechange = function() {
     if (xhttp.readyState == 4 && xhttp.status == 200) {
 	document.getElementById("replyShowPlace").textContent=xhttp.responseText;
@@ -18,7 +19,7 @@ function sendOut() {
   };
   xhttp.open("POST", "reqrly", true);
   xhttp.setRequestHeader('Content-Type', 'application/json');
-  xhttp.send('{"test":"helloworld"}');
+  xhttp.send(JSON.stringify(requestJSON));
 }
 </script>
 

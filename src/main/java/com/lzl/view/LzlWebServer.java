@@ -26,6 +26,9 @@ public class LzlWebServer{
 		server=HttpServer.create(new InetSocketAddress(8000),0);
 		server.createContext("/reqrly",new RequestReplyHandler());
 		server.createContext("/resource/picture",new PictureHandler());
+		server.createContext("/resource/js",new JSHandler());
+		server.createContext("/resource/fonts",new FontsHandler());
+		server.createContext("/resource/css",new CSSHandler());
 		server.createContext("/",new HtmlPageHandler());
 		server.setExecutor(null);
 	}
@@ -110,6 +113,69 @@ public class LzlWebServer{
 			//Write image content into http response
 			DataOutputStream responseStream=new DataOutputStream(t.getResponseBody());
 			responseStream.write(htmlBuf,0,htmlBuf.length);
+			responseStream.close();
+		}
+	}
+
+	static class JSHandler implements HttpHandler{
+		public void handle(HttpExchange t) throws IOException{
+
+System.out.println("JavaScript Request Received!");
+
+			//Extract file name with slash in the front
+			String requestJS=t.getRequestURI().toString();
+			//Read data from file
+			FileInputStream jsFileStream=new FileInputStream(JSHandler.class.getResource(requestJS).getFile());
+			byte[] jsBuf=new byte[jsFileStream.available()];
+			jsFileStream.read(jsBuf,0,jsBuf.length);
+			jsFileStream.close();
+			//set response content-type and reply head
+			Headers h=t.getResponseHeaders();
+			h.add("Content-Type","application/javascript");
+			t.sendResponseHeaders(200,jsBuf.length);
+			//Write image content into http response
+			DataOutputStream responseStream=new DataOutputStream(t.getResponseBody());
+			responseStream.write(jsBuf,0,jsBuf.length);
+			responseStream.close();
+		}
+	}
+
+	static class CSSHandler implements HttpHandler{
+		public void handle(HttpExchange t) throws IOException{
+			//Get the file path
+			String cssPath=t.getRequestURI().toString();
+			//Read data from file
+			FileInputStream cssFileStream=new FileInputStream(CSSHandler.class.getResource(cssPath).getFile());
+			byte[] cssBuf=new byte[cssFileStream.available()];
+			cssFileStream.read(cssBuf,0,cssBuf.length);
+			cssFileStream.close();
+			//set response content-type and reply head
+			Headers h=t.getResponseHeaders();
+			h.add("Content-Type","text/css");
+			t.sendResponseHeaders(200,cssBuf.length);
+			//Write image content into http response
+			DataOutputStream responseStream=new DataOutputStream(t.getResponseBody());
+			responseStream.write(cssBuf,0,cssBuf.length);
+			responseStream.close();
+		}
+	}
+
+	static class FontsHandler implements HttpHandler{
+		public void handle(HttpExchange t) throws IOException{
+			//Get the file path
+			String fontsPath=t.getRequestURI().toString();
+			//Read data from file
+			FileInputStream fontsFileStream=new FileInputStream(FontsHandler.class.getResource(fontsPath).getFile());
+			byte[] fontsBuf=new byte[fontsFileStream.available()];
+			fontsFileStream.read(fontsBuf,0,fontsBuf.length);
+			fontsFileStream.close();
+			//set response content-type and reply head
+			//Headers h=t.getResponseHeaders();
+			//h.add("Content-Type","text/fonts");
+			t.sendResponseHeaders(200,fontsBuf.length);
+			//Write image content into http response
+			DataOutputStream responseStream=new DataOutputStream(t.getResponseBody());
+			responseStream.write(fontsBuf,0,fontsBuf.length);
 			responseStream.close();
 		}
 	}

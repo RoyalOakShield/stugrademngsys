@@ -20,7 +20,7 @@ window.onload = function(){
 		request_continue.open("GET","backend_url");
 		request_continue.send();
 		request_continue.onreadystatechange = function(){
-			if (request_subject.readyState === 4 && request_subject.status === 200) {
+			if (request_continue.readyState === 4 && request_continue.status === 200) {
 				alert("success to connect with server");
 				var judge = JSON.parse(request_continue.responseText);
 				if (judge == 1) {
@@ -30,7 +30,7 @@ window.onload = function(){
 					request_grades.open("GET","backend_url?subject:" + document.getElementById("subject").value);
 					request_grades.send();
 					request_subject.onreadystatechange = function(){
-						if(request_subject.readyState === 4 && request_subject.status === 200){
+						if(request_grades.readyState === 4 && request_grades.status === 200){
 							alert("success to connect with server");
 							var gradesArray = JSON.parse(request_grades.responseText);
 							addGrades(gradesArray);
@@ -65,7 +65,7 @@ window.onload = function(){
 				var data = document.createElement("tr");
 				var ranking = document.createElement("td");
 				var name = document.createElement("td");
-				var stuId = document.createElement("td");
+				var stuID = document.createElement("td");
 				var grade = document.createElement("td");
 
 				ranking.innerHTML = gradesArray[0];
@@ -76,7 +76,7 @@ window.onload = function(){
 				document.grades.appendChild(data);
 				document.data.appendChild(ranking);
 				document.data.appendChild(name);
-				document.data.appendChild(stuId);
+				document.data.appendChild(stuID);
 				document.data.appendChild(grade);
 		}
 	}

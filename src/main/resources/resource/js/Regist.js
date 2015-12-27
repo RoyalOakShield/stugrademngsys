@@ -37,13 +37,13 @@ window.onload = function () {
 					alert("success to connect with server");
 					switch(identity.value){
 						case "student" :
-							window.open('./Stu_StuInfo.html','_blank');
+							window.open('../../htmls/Stu_StuInfo.html','_selft');
 							break;
 						case "teacher" :
-							window.open('./Teach_TeachInfo.html','_blank');
+							window.open('../../htmls/Teach_TeachInfo.html','_selft');
 							break;
 						case "fucultyman" :
-							window.open('./Fac_FacInfo.html','_blank');
+							window.open('../../htmls/Fac_FacInfo.html','_selft');
 							break;
 						default:
 							alert("false");

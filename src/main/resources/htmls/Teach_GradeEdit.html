@@ -24,11 +24,15 @@
 	th{
 		width:25%;
 	}
+	input{
+		width:20%;
+	}
 	button{
 		width:5%;
 		margin-left: 48%;
 	}
 	</style>
+	<script src="../resource/js/Teach_GradeEdit.js"></script>
 </head>
 <body>
 	<h1>Grade Edit</h1>
@@ -48,35 +52,21 @@
 					<td>1</td>
 					<td>Jerry</td>
 					<td>0402001</td>
-					<td>96</td>
+					<td>92
+						<input class="grade" value="">
+					</td>
 				</tr>
 				<tr>
 					<td>2</td>
 					<td>Thomas</td>
 					<td>0402007</td>
-					<td>92</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
+					<td>93
+						<input class="grade" value="">
+					</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-	<a href="./Teach_Grade.html"><button class="btn btn-info" name="submit" type="submit">Submit</button></a>
+	<button class="btn btn-info" name="submit" id="submit" type="submit">Submit</button>
 </body>
 </html>

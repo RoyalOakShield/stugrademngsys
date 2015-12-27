@@ -10,8 +10,8 @@ window.onload = function () {
 				"Password":"",
 				"Identity":"",
 			};
-			loginInfo["Name"] = document.getElementsByName("Login_usrname").value;
-			loginInfo["Password"] = document.getElementsByName("Login_password").value;
+			loginInfo["Name"] = document.getElementsByName("Login_usrname")[0].value;
+			loginInfo["Password"] = document.getElementsByName("Login_password")[0].value;
 			var identity = document.getElementsByName("userType")[0];	
 				switch(identity.value){
 					case "student" : 

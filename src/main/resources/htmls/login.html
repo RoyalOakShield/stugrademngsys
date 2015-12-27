@@ -6,33 +6,108 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<style type="text/css">
 	body{
-		background-image: url(resource/picture/background1.png);
+		background-image: url(../resource/picture/background1.png);
 		margin: 0px;
 		padding: 0px;
 	}
 	h1{
 		font-family: Arial,Helvetica,sans-serif;
+		text-align: center;
 	}
 	.form-group{
-		width:500px;
-		color:white;
+		width:30%;
+		margin-top: 3%;
+		margin-left: 35%;
+	}
+	button{
+		width:5%;
+	}
+	#btn_submit{
+		margin-left: 40%;
+	}
+	#btn_regist{
+		margin-left: 10%;
 	}
 	</style>
+	<script type="text/javascript">
+	window.onload = function () {
+		document.getElementsByName("submit")[0].onclick = function(){
+			//send AJAX submit request;
+			var request = new XMLHttpRequest();
+			request.open("POST","backend_url");
+
+			//create a JSON(loginInfo) to save the information of usrname,password and identity;
+			var loginInfo = {
+				"Name":"",
+				"Password":"",
+				"Identity":"",
+			};
+			loginInfo["Name"] = document.getElementsByName("Login_usrname").value;
+			loginInfo["Password"] = document.getElementsByName("Login_password").value;
+			var identity = document.getElementsByName("userType")[0];	
+				switch(identity.value){
+					case "student" : 
+						loginInfo["Identity"] = "student";			
+						break;
+					case "teacher" : 
+						loginInfo["Identity"] = "teacher";		
+						break;
+					case "fucultyman" : 
+						loginInfo["Identity"] = "fucultyman";			
+						break;
+					default: 
+						alert("false");
+						break;
+					}
+
+			request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+			request.send(JSON.stringify(loginInfo));
+			request.onreadystatechange = function(){
+				if(request.readyState === 4 && request.status ===200 ){
+					alert("success to connect with server");
+					switch(identity.value){
+						case "student" :
+							window.open('./Stu_Grade.html','_blank');
+							break;
+						case "teacher" :
+							window.open('./Teach_Grade.html','_blank');
+							break;
+						case "fucultyman" :
+							window.open('./Facultyman.html','_blank');
+							break;
+						default:
+							alert("false");
+				}
+				else{
+					alert("false:š" + request.status);
+				}
+			}
+
+		}
+	}
+	</script>
 </head>
 <body>
+	<br />
+	<br />
 	<h1>Login</h1>
 	<form role="form">
 		<div class="form-group">
-			Name:<input type="text" class="form-control" name="Login_usrname" placeholder="Your name,please"/><br />
-			Password:<input type="password" class="form-control" name="Login_password" placeholder="Password,please"/><br />
-			Identity:<select class="form-control">
-				<option>student</option>
-				<option>teacher</option>
-				<option>fucultyman</option>
-			</select>
+			Name:
+				<input type="text" class="form-control" name="Login_usrname" placeholder="Your name,please"/><br />
+			Password:
+				<input type="password" class="form-control" name="Login_password" placeholder="Password,please"/><br />
+			Identity:
+				<select class="form-control" name="userType">
+					<option class="identity"value="student">student</option>
+					<option class="identity" value="teacher">teacher</option>
+					<option class="identity" value="fucultyman">fucultyman</option>
+				</select>
 		</div>
 	</form>
-	<button class="btn btn-info" name="submit">OK</button>
- 
+<div class="button">
+	<button class="btn btn-info" name="submit" id="btn_submit" type="submit">OK</button>
+ 	<a href="./regist.html"><button class="btn btn-info" name="regist" id="btn_regist">regist</button></a>
+</div>
 </body>
 </html>

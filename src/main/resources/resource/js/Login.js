@@ -2,7 +2,7 @@ window.onload = function () {
 		document.getElementsByName("submit")[0].onclick = function(){
 			//send AJAX submit request;
 			var request = new XMLHttpRequest();
-			request.open("POST","backend_url");
+			request.open("POST","reqrly");
 
 			//create a JSON(loginInfo) to save the information of usrname,password and identity;
 			var loginInfo = {

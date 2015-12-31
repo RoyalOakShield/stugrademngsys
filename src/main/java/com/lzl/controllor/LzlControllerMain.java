@@ -3,6 +3,8 @@ package com.lzl.controller;
 import com.lzl.NetworkTalker;
 import org.json.*;
 import java.io.*;
+import com.lzl.Reply;
+import com.lzl.Request;
 
 public class LzlControllerMain extends Thread{
 	private JSONObject reply;

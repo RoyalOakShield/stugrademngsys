@@ -45,8 +45,8 @@ public void run(){
 		}
 		//System.out.println(request);//DEBUG!!!!!!!
 
-		String action=(String)request.get("Request");//get to know what action the request want
-		JSONObject firstDetail=(JSONObject)request.get("Detail"); // get the value of first "Detial" key to convenient next stages
+		String action=(String)requestV.get("Request");//get to know what action the request want
+		JSONObject firstDetail=(JSONObject)requestV.get("Detail"); // get the value of first "Detial" key to convenient next stages
 
 		identity=(String)firstDetail.get("Identity");
 		infotype=(String)firstDetail.get("Infotype");
@@ -63,8 +63,8 @@ public void run(){
 ":"ACCOUNT","Detail":{"Username":"Lizzy","Password"："123456"}}}
 */
 		if(action.equals("LOGIN")){
-			JSONObject username=secondDetail.get("Username");
-			JSONObject passwordV=secondDetail.get("Password");
+			JSONObject username=(JSONObject)secondDetail.get("Username");
+			String passwordV=(String)secondDetail.get("Password");
 			//Password passwordV=secondDetail.get("Password");
 			JSONObject requestCorrectPassword=new JSONObject()
 										.put("Request","GET")
@@ -82,7 +82,7 @@ public void run(){
 				System.err.println("IOException occured"+e.toString());
 			}
 
-			passwordM=(String)((JSONObject)((JSONObject)resultOfCorrectPassword.get("Detail")).get("Detail")).get("Password");
+			String passwordM=(String)((JSONObject)((JSONObject)resultOfCorrectPassword.get("Detail")).get("Detail")).get("Password");
 			if(passwordV.equals(passwordM)){
 				talker.sendRequest(NetworkTalker.VIEW,(new Reply(1)).toJSON());//Return
 			}
@@ -91,8 +91,8 @@ public void run(){
 			}
 		}
 		else if (action.equals("EXIT")){
-			talker.sendRequest(NetworkTalker.MODEL,new JSONObject("Request","EXIT"));
-			LzlWebServer.stop();//LAST THING
+			talker.sendRequest(NetworkTalker.MODEL,new JSONObject().put("Request","EXIT"));
+			//LzlWebServer.stop();//LAST THING
 			talker.close();
 			break;
 		}

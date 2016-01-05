@@ -129,18 +129,18 @@ public void run(){
 			//talker.sendRequest(NetworkTalker.Model,identity);
 			//talker.sendRequest(NetworkTalker.Model,infotype);
 			//talker.sendRequest(NetworkTalker.Model,secondDetail);
-		}
 		//send back to view
-		try{
-			requestBack=talker.getNextRequest();
-		}catch(IOException e){
-			System.err.println("IOException occured in CONTROLLER while receiving back from Model: "+e.toString());
-		}
-		try{
-			talker.sendRequest(NetworkTalker.VIEW,requestBack);
-		}
-		catch(IOException e){
-			System.err.println(e);
+			try{
+				requestBack=talker.getNextRequest();
+			}catch(IOException e){
+				System.err.println("IOException occured in CONTROLLER while receiving back from Model: "+e.toString());
+			}
+			try{
+				talker.sendRequest(NetworkTalker.VIEW,requestBack);
+			}
+			catch(IOException e){
+				System.err.println(e);
+			}
 		}
 		//talker.sendRequest(NetworkTalker.Veiw,action);
 		//talker.sendRequest(NetworkTalker.View,identity);

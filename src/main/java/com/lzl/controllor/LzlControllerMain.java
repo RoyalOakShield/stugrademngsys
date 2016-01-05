@@ -73,7 +73,12 @@ public void run(){
 										.put("Infotype",infotype)
 										.put("Detail",new JSONObject()
 										.put("Username",username)));
-			talker.sendRequest(NetworkTalker.MODEL,requestCorrectPassword);
+			try{
+				talker.sendRequest(NetworkTalker.MODEL,requestCorrectPassword);
+			}
+			catch(IOException e){
+				System.err.println(e);
+			}
 			JSONObject resultOfCorrectPassword=null;
 			try{
 				resultOfCorrectPassword=talker.getNextRequest();
@@ -84,21 +89,41 @@ public void run(){
 
 			String passwordM=(String)((JSONObject)((JSONObject)resultOfCorrectPassword.get("Detail")).get("Detail")).get("Password");
 			if(passwordV.equals(passwordM)){
-				talker.sendRequest(NetworkTalker.VIEW,(new Reply(1)).toJSON());//Return
+				try{
+					talker.sendRequest(NetworkTalker.VIEW,(new Reply(1)).toJSON());//Return
+				}
+				catch(IOException e){
+					System.err.println(e);
+				}
 			}
 			else{
-				talker.sendRequest(NetworkTalker.VIEW,(new Reply(0)).toJSON());
+				try{
+					talker.sendRequest(NetworkTalker.VIEW,(new Reply(0)).toJSON());
+				}
+				catch(IOException e){
+					System.err.println(e);
+				}		
 			}
 		}
 		else if (action.equals("EXIT")){
-			talker.sendRequest(NetworkTalker.MODEL,new JSONObject().put("Request","EXIT"));
+			try{
+				talker.sendRequest(NetworkTalker.MODEL,new JSONObject().put("Request","EXIT"));
+			}
+			catch(IOException e){
+				System.err.println(e);
+			}
 			//LzlWebServer.stop();//LAST THING
 			talker.close();
 			break;
 		}
 		else{
 			//to MODEL
-			talker.sendRequest(NetworkTalker.MODEL,new Request(action,identity,infotype,secondDetail).toJSON());
+			try{
+				talker.sendRequest(NetworkTalker.MODEL,new Request(action,identity,infotype,secondDetail).toJSON());
+			}
+			catch(IOException e){
+				System.err.println(e);
+			}
 			//talker.sendRequest(NetworkTalker.Model,action);
 			//talker.sendRequest(NetworkTalker.Model,identity);
 			//talker.sendRequest(NetworkTalker.Model,infotype);
@@ -110,7 +135,12 @@ public void run(){
 		}catch(IOException e){
 			System.err.println("IOException occured in CONTROLLER while receiving back from Model: "+e.toString());
 		}
-		talker.sendRequest(NetworkTalker.VIEW,requestBack);
+		try{
+			talker.sendRequest(NetworkTalker.VIEW,requestBack);
+		}
+		catch(IOException e){
+			System.err.println(e);
+		}
 		//talker.sendRequest(NetworkTalker.Veiw,action);
 		//talker.sendRequest(NetworkTalker.View,identity);
 		//talker.sendRequest(NetworkTalker.View,infotype);

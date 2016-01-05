@@ -63,7 +63,7 @@ public void run(){
 ":"ACCOUNT","Detail":{"Username":"Lizzy","Password"："123456"}}}
 */
 		if(action.equals("LOGIN")){
-			JSONObject username=(JSONObject)secondDetail.get("Username");
+			String username=(String)secondDetail.get("Username");
 			String passwordV=(String)secondDetail.get("Password");
 			//Password passwordV=secondDetail.get("Password");
 			JSONObject requestCorrectPassword=new JSONObject()
@@ -87,7 +87,8 @@ public void run(){
 				System.err.println("IOException occured"+e.toString());
 			}
 
-			String passwordM=(String)((JSONObject)((JSONObject)resultOfCorrectPassword.get("Detail")).get("Detail")).get("Password");
+			Reply resultFromModel=new Reply(resultOfCorrectPassword);
+			String passwordM=resultFromModel.getContentElemByIndex(0).getJSONObject("Detail").getString("Password"); 
 			if(passwordV.equals(passwordM)){
 				try{
 					talker.sendRequest(NetworkTalker.VIEW,(new Reply(1)).toJSON());//Return

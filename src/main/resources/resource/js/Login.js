@@ -2,29 +2,29 @@ window.onload = function () {
 		document.getElementsByName("submit")[0].onclick = function(){
 			//send AJAX submit request;
 			var request = new XMLHttpRequest();
-			request.open("POST","backend_url");
+			request.open("POST","reqrly");
 
 			//create a JSON(loginInfo) to save the information of usrname,password and identity;
 			var loginInfo = {
-				"Name":"",
-				"Password":"",
-				"Identity":"",
+				"Request":"Login";
+				"Detail":{
+							"Name":"",
+							"Password":"",
+							"Identity":"",
+				}
 			};
-			loginInfo["Name"] = document.getElementsByName("Login_usrname")[0].value;
-			loginInfo["Password"] = document.getElementsByName("Login_password")[0].value;
+			loginInfo.Detail.Name = document.getElementsByName("Login_usrname")[0].value;
+			loginInfo.Detail.Password = document.getElementsByName("Login_password")[0].value;
 			var identity = document.getElementsByName("userType")[0];	
 				switch(identity.value){
 					case "student" : 
-						loginInfo["Identity"] = "student";			
+						loginInfo.Detail.Identity = "student";			
 						break;
 					case "teacher" : 
-						loginInfo["Identity"] = "teacher";		
+						loginInfo.Detail.Identity = "teacher";		
 						break;
 					case "fucultyman" : 
-						loginInfo["Identity"] = "fucultyman";			
-						break;
-					default: 
-						alert("false");
+						loginInfo.Detail.Identity = "fucultyman";			
 						break;
 					}
 
@@ -43,8 +43,6 @@ window.onload = function () {
 						case "fucultyman" :
 							window.open('../../htmls/Facultyman.html','_selft');
 							break;
-						default:
-							alert("false");
 					}
 				}
 				else{

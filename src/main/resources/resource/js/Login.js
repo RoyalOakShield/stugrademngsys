@@ -6,7 +6,7 @@ window.onload = function () {
 
 			//create a JSON(loginInfo) to save the information of usrname,password and identity;
 			var loginInfo = {
-				"Request":"Login";
+				"Request":"Login",
 				"Detail":{
 							"Name":"",
 							"Password":"",
@@ -48,6 +48,6 @@ window.onload = function () {
 				else{
 					alert("false：" + request.status);
 			}
-		}
+		};
 	}
 }

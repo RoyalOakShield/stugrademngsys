@@ -6,27 +6,29 @@ window.onload = function () {
 
 			//create a JSON(loginInfo) to save the information of usrname,password,confirm and identity;
 			var registInfo = {
-				"Name":"",
-				"Password":"",
-				"Confirm":"", 
-				"Identity":"",
+				"Request":"REGIST",
+				"Detail":{
+							"Identity":"",
+							"Infotype":"ACCOUNT",
+							"Detail":{
+								"Username":"",
+								"Password":"",
+								"Confirm":"",
+							}
 			};
-			registInfo["Name"] = document.getElementsByName("Regist_usrname")[0].value;
-			registInfo["Password"] = document.getElementsByName("Regist_password")[0].value;
-			registInfo["Confirm"] = document.getElementsByName("Regist_confirm")[0].value;
+			registInfo.Detail.Detail.Username = document.getElementsByName("Regist_usrname")[0].value;
+			registInfo.Detail.Detail.Password = document.getElementsByName("Regist_password")[0].value;
+			registInfo.Detail.Detail.Confirm = document.getElementsByName("Regist_confirm")[0].value;
 			var identity = document.getElementsByName("userType")[0];	
 				switch(identity.value){
 					case "student" : 
-						registInfo["Identity"] = "student";			
+						registInfo.Identity = "STUDENT";			
 						break;
 					case "teacher" : 
-						registInfo["Identity"] = "teacher";		
+						registInfo.Identity = "TEACHER";		
 						break;
 					case "fucultyman" : 
-						registInfo["Identity"] = "fucultyman";			
-						break;
-					default: 
-						alert("false");
+						registInfo.Identity = "FACULTYMAN";			
 						break;
 					}
 
@@ -45,14 +47,11 @@ window.onload = function () {
 						case "fucultyman" :
 							window.open('../../htmls/Fac_FacInfo.html','_selft');
 							break;
-						default:
-							alert("false");
 					}
 				}
 				else{
 					alert("false:" + request.status);
 				}
-			}
-
+			};
 		}
 	}

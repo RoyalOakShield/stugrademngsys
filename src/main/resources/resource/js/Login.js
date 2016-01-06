@@ -6,25 +6,28 @@ window.onload = function () {
 
 			//create a JSON(loginInfo) to save the information of usrname,password and identity;
 			var loginInfo = {
-				"Request":"Login",
+				"Request":"LOGIN",
 				"Detail":{
-							"Name":"",
-							"Password":"",
 							"Identity":"",
+							"Infotype":"ACCOUNT",
+							"Detail":{
+								"Username":"",
+								"Password":"",
+							}
 				}
 			};
-			loginInfo.Detail.Name = document.getElementsByName("Login_usrname")[0].value;
-			loginInfo.Detail.Password = document.getElementsByName("Login_password")[0].value;
+			loginInfo.Detail.Detail.Username = document.getElementsByName("Login_usrname")[0].value;
+			loginInfo.Detail.Detail.Password = document.getElementsByName("Login_password")[0].value;
 			var identity = document.getElementsByName("userType")[0];	
 				switch(identity.value){
 					case "student" : 
-						loginInfo.Detail.Identity = "student";			
+						loginInfo.Detail.Identity = "STUDENT";			
 						break;
 					case "teacher" : 
-						loginInfo.Detail.Identity = "teacher";		
+						loginInfo.Detail.Identity = "TEACHER";		
 						break;
 					case "fucultyman" : 
-						loginInfo.Detail.Identity = "fucultyman";			
+						loginInfo.Detail.Identity = "FACULTYMAN";			
 						break;
 					}
 

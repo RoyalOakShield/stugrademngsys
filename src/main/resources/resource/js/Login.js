@@ -38,13 +38,13 @@ window.onload = function () {
 					alert("success to connect with server");
 					switch(identity.value){
 						case "student" :
-							window.open('../../htmls/Stu_Grade.html','_selft');
+							window.open('Stu_Grade.html','_selft');
 							break;
 						case "teacher" :
-							window.open('../../htmls/Teach_Grade.html','_selft');
+							window.open('Teach_Grade.html','_selft');
 							break;
 						case "fucultyman" :
-							window.open('../../htmls/Facultyman.html','_selft');
+							window.open('Facultyman.html','_selft');
 							break;
 					}
 				}

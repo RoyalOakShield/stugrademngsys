@@ -36,17 +36,17 @@ window.onload = function () {
 			request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 			request.send(JSON.stringify(registInfo));
 			request.onreadystatechange = function(){
-				if(request.readyState === 4 && request.status ===200 ){
+				if( request.status ===200 ){
 					alert("success to connect with server");
 					switch(identity.value){
 						case "student" :
-							window.open('../../htmls/Stu_StuInfo.html','_selft');
+							window.open('Stu_StuInfo.html','_selft');
 							break;
 						case "teacher" :
-							window.open('../../htmls/Teach_TeachInfo.html','_selft');
+							window.open('Teach_TeachInfo.html','_selft');
 							break;
 						case "fucultyman" :
-							window.open('../../htmls/Fac_FacInfo.html','_selft');
+							window.open('Fac_FacInfo.html','_selft');
 							break;
 					}
 				}
@@ -54,5 +54,5 @@ window.onload = function () {
 					alert("false:" + request.status);
 				}
 			};
-		}
-	}
+		};
+	};

@@ -31,26 +31,34 @@ window.onload = function () {
 						break;
 					}
 
-			request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+			request.setRequestHeader("Content-Type","application/json");
 			request.send(JSON.stringify(loginInfo));
 			request.onreadystatechange = function(){
-				if(request.readyState === 4 && request.status ===200 ){
+			if(request.readyState === XMLHttpRequest.DONE){
+				if( request.status ===200 ){
 					alert("success to connect with server");
-					switch(identity.value){
-						case "student" :
-							window.open('Stu_Grade.html','_selft');
-							break;
-						case "teacher" :
-							window.open('Teach_Grade.html','_selft');
-							break;
-						case "fucultyman" :
-							window.open('Facultyman.html','_selft');
-							break;
+					var replyJSON=JSON.parse(request.responseText);
+					if(replyJSON.Return === 1){
+						switch(identity.value){
+							case "student" :
+								window.open('Stu_Grade.html','_selft');
+								break;
+							case "teacher" :
+								window.open('Teach_Grade.html','_selft');
+								break;
+							case "fucultyman" :
+								window.open('Facultyman.html','_selft');
+								break;
+						}
+					}
+					else{
+						alert("Login Failed.Check your username and password please");
 					}
 				}
 				else{
-					alert("false：" + request.status);
+					alert("http error:" + request.status);
+				}
 			}
 		};
-	}
-}
+	};
+};

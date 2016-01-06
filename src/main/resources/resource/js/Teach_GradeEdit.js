@@ -7,7 +7,7 @@ window.onload = function(){
 		request_continue.open("GET","reqrly");
 		request_continue.send();
 		request_continue.onreadystatechange = function(){
-			if (request_subject.readyState === 4 && request_subject.status === 200) {
+			if (request_continue.readyState === 4 && request_continue.status === 200) {
 				alert("success to connect with server");
 				var judge = JSON.parse(request_continue.responseText);
 				if (judge == 1) {
@@ -16,8 +16,8 @@ window.onload = function(){
 
 					request_grades.open("GET","backend_url");
 					request_grades.send();
-					request_subject.onreadystatechange = function(){
-						if(request_subject.readyState === 4 && request_subject.status === 200){
+					request_grades.onreadystatechange = function(){
+						if(request_grades.readyState === 4 && request_grades.status === 200){
 							alert("success to connect with server");
 							var gradesArray = JSON.parse(request_grades.responseText);
 							addGrades(gradesArray);
@@ -42,16 +42,16 @@ window.onload = function(){
 
 			request_submit.open("POST","backend_url");
 			//create a JSON(grades) to save the grades including ranking, name, stuID, changegrade;
-			var grades ={	"ranking":"",
-							"name":"",
-							"stuID":"",
-							"grade":"",
+			var grades ={	"Ranking":"",
+							"Name":"",
+							"StuID":"",
+							"Grade":"",
 						};
 			for (var j = 0; j < i; j++) {
-				grades["ranking"] = document.getElementsByName("ranking")[j].value;
-				grades["name"] = document.getElementsByName("name")[j].value;
-				grades["stuID"] = document.getElementsByName("stuID")[j].value;
-				grades["grade"] = document.getElementsByName("change")[j].value;
+				grades["Ranking"] = document.getElementsByName("Ranking")[j].value;
+				grades["Name"] = document.getElementsByName("Name")[j].value;
+				grades["StuID"] = document.getElementsByName("StuID")[j].value;
+				grades["Grade"] = document.getElementsByName("Change")[j].value;
 			};
 
 			request_submit.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
@@ -60,7 +60,7 @@ window.onload = function(){
 				if(request_submit.readyState === 4 && request_submit.status === 200){
 					alert("success to connect with server");
 					document.write("submit successful");
-					window.open("./Teach_Grade.html","_selft");
+					window.open("../../htmls/Teach_Grade.html","_selft");
 				}
 				else{
 					alert("false:" + request_submit.status);
@@ -79,11 +79,11 @@ window.onload = function(){
 				var grade = document.createElement("td");
 				var change = document.createElement("input");
 
-				ranking.name = "ranking";
-				name.name = "name";
-				stuID.name = "stuID";
-				grade.name = "grade";
-				change.name = "change";
+				ranking.name = "Ranking";
+				name.name = "Name";
+				stuID.name = "StuID";
+				grade.name = "Grade";
+				change.name = "Change";
 
 				ranking.innerHTML = gradesArray[0];
 				name.innerHTML = gradesArray[1];

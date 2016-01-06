@@ -6,7 +6,7 @@ window.onload = function () {
 
 			//create a JSON(loginInfo) to save the information of usrname,password,confirm and identity;
 			var registInfo = {
-				"Request":"REGIST",
+				"Request":"ADD",
 				"Detail":{
 							"Identity":"",
 							"Infotype":"ACCOUNT",
@@ -28,7 +28,7 @@ window.onload = function () {
 					case "teacher" : 
 						registInfo.Identity = "TEACHER";		
 						break;
-					case "fucultyman" : 
+					case "facultyman" : 
 						registInfo.Identity = "FACULTYMAN";			
 						break;
 					}
@@ -40,13 +40,13 @@ window.onload = function () {
 					alert("success to connect with server");
 					switch(identity.value){
 						case "student" :
-							window.open('../../htmls/Stu_StuInfo.html','_selft');
+							window.open('htmls/Stu_StuInfo.html','_selft');
 							break;
 						case "teacher" :
-							window.open('../../htmls/Teach_TeachInfo.html','_selft');
+							window.open('htmls/Teach_TeachInfo.html','_selft');
 							break;
-						case "fucultyman" :
-							window.open('../../htmls/Fac_FacInfo.html','_selft');
+						case "facultyman" :
+							window.open('htmls/Fac_FacInfo.html','_selft');
 							break;
 					}
 				}

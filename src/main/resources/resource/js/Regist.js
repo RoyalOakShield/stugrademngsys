@@ -14,7 +14,8 @@ window.onload = function () {
 								"Username":"",
 								"Password":"",
 								"Confirm":"",
-							}
+							},
+				},
 			};
 			registInfo.Detail.Detail.Username = document.getElementsByName("Regist_usrname")[0].value;
 			registInfo.Detail.Detail.Password = document.getElementsByName("Regist_password")[0].value;

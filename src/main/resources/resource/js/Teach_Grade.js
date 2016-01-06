@@ -2,7 +2,7 @@ window.onload = function(){
 		//send AJAX get the subjects
 		var request_subject = new XMLHttpRequest();
 
-		request_subject.open("GET","backend_url");
+		request_subject.open("GET","reqrly");
 		request_subject.send();
 		request_subject.onreadystatechange = function(){
 			if(request_subject.readyState === 4 && request_subject.status === 200){

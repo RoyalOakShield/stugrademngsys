@@ -4,7 +4,7 @@ window.onload = function(){
 	while(judge == 1){
 		//send AJAX get the boolean to judge whether to continue sending AJAX to get the grades
 		var request_continue = new XMLHttpRequest();
-		request_continue.open("GET","backend_url");
+		request_continue.open("GET","reqrly");
 		request_continue.send();
 		request_continue.onreadystatechange = function(){
 			if (request_continue.readyState === 4 && request_continue.status === 200) {

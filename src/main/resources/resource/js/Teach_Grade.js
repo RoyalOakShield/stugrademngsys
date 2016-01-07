@@ -43,50 +43,50 @@ window.onload = function(){
 									var gradesArray = JSON.parse(request_grades.responseText);
 									addGrades(gradesArray);
 									i++;
-								};
+								}
 							}
 							else{
 								alert("false of loading the grades:" + request_grades.status);
-							};
+							}
 						};
 					}
 					else{
 						alert("Finished!");
-					};
+					}
 				}
 				else{
 					alert("false:" + request_continue.status);
-				};
-			};	
+				}
+			}
 		};
-	};
+	}
 		//create<option> for <select> to add subject which can be chosen
-		function addSubject(subjArray){
-			for (var i = 0; i < subjArray.length; i++) {
-				var subj = document.getElementById("subject");
-				var option = document.createElement("option");
-				option.innerHTML = subjArray[i];
-				subj.appendChild(option);
-			};
-		}
-		//add data including ranking, name, stuId, grade
-		function addGrades(gradesArray){
-				var grades = document.getElementByTagName("tbody");
-				var data = document.createElement("tr");
-				var ranking = document.createElement("td");
-				var name = document.createElement("td");
-				var stuID = document.createElement("td");
-				var grade = document.createElement("td");
-
-				ranking.innerHTML = gradesArray[0];
-				name.innerHTML = gradesArray[1];
-				stuId.innerHTML = gradesArray[2];
-				grade.innerHTML = gradesArray[3];
-
-				document.grades.appendChild(data);
-				document.data.appendChild(ranking);
-				document.data.appendChild(name);
-				document.data.appendChild(stuID);
-				document.data.appendChild(grade);
+	function addSubject(subjArray){
+		for (var i = 0; i < subjArray.length; i++) {
+			var subj = document.getElementById("subject");
+			var option = document.createElement("option");
+			option.innerHTML = subjArray[i];
+			subj.appendChild(option);
 		}
 	}
+		//add data including ranking, name, stuId, grade
+	function addGrades(gradesArray){
+		var grades = document.getElementByTagName("tbody");
+		var data = document.createElement("tr");
+		var ranking = document.createElement("td");
+		var name = document.createElement("td");
+		var stuID = document.createElement("td");
+		var grade = document.createElement("td");
+
+		ranking.innerHTML = gradesArray[0];
+		name.innerHTML = gradesArray[1];
+		stuId.innerHTML = gradesArray[2];
+		grade.innerHTML = gradesArray[3];
+
+		document.grades.appendChild(data);
+		document.data.appendChild(ranking);
+		document.data.appendChild(name);
+		document.data.appendChild(stuID);
+		document.data.appendChild(grade);
+	}
+};

@@ -1,0 +1,25 @@
+发送和接收请求的格式和之前说的一样，也就是说是在浏览器里面用javascript自带的json处理工具先把请求封装好然后再发给服务器的，接收的时候也是一样，接收到的是JSON格式的包要在浏览器里面拆包，服务器起的其实是转发作用，并不会处理包里的内容。
+大致代码如下：
+
+//首先有个已经弄好了的json格式的请求包
+requestInJSONFormat=...
+//然后构建Ajax包
+var httpRequest=new XMLHttpRequest();
+//设置处理结果的函数
+httpRequest.onreadystage=function(){
+	if(httpRequest.readyState===XMLHttpRequest.DONE && httpRequest.status === 200){ //如果返回结果成功
+		var replyInJSONFormat=JSON.parse(httpRequest.responseText);
+		//然后使用返回结果做其他事情
+		...
+	}
+}
+//设置MIME
+httpRequest.setRequestHeader('Content-Type', 'application/json');
+//发送请求
+httpRequest.open('POST','reqrly',true);
+httpRequest.send(JSON.stringify(requestInJSONFormat));
+
+参考资料：
+1. Ajax: https://developer.mozilla.org/en-US/docs/AJAX/Getting_Started
+2. JSON: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON
+3. JSON教程: http://www.w3schools.com/json/default.asp

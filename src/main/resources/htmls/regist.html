@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="type/html; charset=utf-8">
+	<title>Regist</title>
+	<link rel="stylesheet" href="resource/css/bootstrap.min.css">
+	<style type="text/css">
+	body{
+		background-image: url(../resource/picture/background1.png);
+		padding:0px;
+		margin:0px;
+	}
+	h1{
+		text-align: center;
+	}
+	.form-group{
+		width: 30%;
+		margin-top: 3%;
+		margin-left: 35%;
+	}
+	button{
+		margin-left: 48%;
+	}
+	</style>
+	<script src="../resource/js/Regist.js"></script>
+</head>
+<body>
+	<br />
+	<br />
+	<h1>Regist</h1>
+	<form role="form">
+		<div class="form-group">
+			Name:<input type="text" class="form-control" name="Regist_usrname" placeholder="Your name,please"/><br />
+			Password:<input type="password" class="form-control" name="Regist_password" placeholder="Password,please"/><br />
+			Confirm:<input type="password" class="form-control" name="Regist_confirm" placeholder="Try again"/><br />
+			Identity:<select class="form-control" name="userType">
+				<option>student</option>
+				<option>teacher</option>
+				<option>facultyman</option>
+			</select>
+		</div>
+	</form>
+
+	<button class="btn btn-info" name="submit" type="submit">OK</button>
+
+</body>
+</html>
